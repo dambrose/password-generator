@@ -1,6 +1,7 @@
 import './App.css';
 import randomPass from './lib/randomPass';
 import dicePass from './lib/dicePass';
+import requirementsPass from './lib/requirementsPass';
 
 function App() {
 	return (
@@ -12,3 +13,4 @@ function App() {
 }
 
 export default App;
+
