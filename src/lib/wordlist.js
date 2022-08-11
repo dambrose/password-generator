@@ -7692,7 +7692,7 @@ const wordList = [
 	{key: '66445', word: 'wooing'},
 	{key: '66446', word: 'wool'},
 	{key: '66451', word: 'woozy'},
-	{key: '66452', word: word},
+	{key: '66452', word: 'word'},
 	{key: '66453', word: 'work'},
 	{key: '66454', word: 'worried'},
 	{key: '66455', word: 'worrier'},
