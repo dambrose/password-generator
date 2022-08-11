@@ -15,12 +15,7 @@ gzip_types text/plain text/css application/json application/x-javascript text/xm
 server {
     listen 80;
     server_name _;
-
-    location / {
-        root   /usr/share/nginx/html;
-        index  index.html index.htm;
-    }
-
+	return 301 https://$host$request_uri;
 }
 
 server {
