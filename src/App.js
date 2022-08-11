@@ -8,7 +8,6 @@ import CategoryChoices from './CategoryChoices';
 
 function App() {
 
-
 	localStorage.clear();
 
 	const [state, setState] = useState({
@@ -48,16 +47,7 @@ function App() {
 	let defaultPassword1 = (type === "random") ? randomPass(length1) : requirementsPass(length1, state);
 	/*console.log(defaultPassword1);*/
 
-	useEffect(() => {
-		dicePass(length2, separator)
-			.then(pass => {
-				setState({...state, password2: pass});
-			})
-			.catch(err => {
-				console.error(err)
-				setError(true);
-			});
-	}, [length2, separator])
+	let defaultPassword2 = dicePass(length2, separator);
 
 	useEffect(() => {
 		for (const property in state) {
@@ -74,7 +64,7 @@ function App() {
 	const title = 'Welcome to Password Generator!';
 	const instructions = 'Click the button below to create a strong, secure, randomized or memorable password.';
 	const passwordLabel1 = (password1 === "") ? defaultPassword1 : password1;
-	const passwordLabel2 = password2;
+	const passwordLabel2 = (password2 === "") ? defaultPassword2 : password2;
 	const buttonLabel = 'Generate Passwords';
 	const length1Prompt = 'How long would you like your password to be?';
 	const length2Prompt = 'How many words would you like to be in your password?';
@@ -88,13 +78,7 @@ function App() {
 		let newState = null;
 
 		if (event.target.id === "generate") {
-			dicePass(length2, separator)
-				.then(pass => {
-					setState({...state, password2: pass});
-				})
-				.catch(err => {
-					console.error(err);
-				});
+			newState = {...state, password: dicePass(length2, separator)};
 
 			if (type === 'random')
 				newState = {...state, password: randomPass(length1)};
@@ -142,7 +126,7 @@ function App() {
 		else if (event.target.id === "ambiguous")
 			newState = {...state, type: "requirements", ambiguous: !ambiguous};
 		else if (event.target.id === "length1" && event.target.value > 3)
-			newState = {...state, length1: parseInt(event.target.value), password: ""};
+			newState = {...state, length1: parseInt(event.target.value), password1: ""};
 		else if (event.target.value === "all")
 			newState = {
 				...state,
@@ -159,7 +143,7 @@ function App() {
 		else if (event.target.id === ";" || event.target.id === "-" || event.target.id === ":" || event.target.id === "+")
 			newState = {...state, separator: event.target.id};
 		else if (event.target.id === "length2" && event.target.value > 0)
-			newState = {...state, length2: parseInt(event.target.value)};
+			newState = {...state, length2: parseInt(event.target.value), password2: ""};
 
 		if (newState !== null)
 			setState(newState);
