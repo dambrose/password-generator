@@ -1,0 +1,114 @@
+div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.header {
+    line-height: 1.0;
+    padding-top: 30px;
+    /* padding-bottom: 40px;*/
+    color: lightseagreen;
+    font-weight: bold;
+    font-size: 68px;
+}
+
+.largePrompt {
+    padding: 0 10px;
+    /*text-align: center;*/
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.password {
+    overflow-wrap: break-word;
+    flex-grow: 4;
+    flex-basis: auto auto;
+    margin: 30px auto 5px auto;
+    width: 325px;
+    padding: 10px;
+    border: 3px solid lightseagreen;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 28px;
+}
+
+.generateButton {
+    justify-content: center;
+    max-width: 300px;
+    max-height: 300px;
+    min-width: 150px;
+    min-height: 75px;
+    background-color: lightseagreen;
+    color: white;
+    font-size: 22px;
+    margin: 30px;
+    border-radius: 15px;
+}
+
+.copyButton {
+    max-width: 115px;
+    max-height: 50px;
+    min-width: 75px;
+    min-height: 25px;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.smallPrompt {
+    font-size: 18px;
+    margin-bottom: 0;
+    /*align-items: center;*/
+    /*text-align: center;*/
+}
+
+.optionsHeading {
+    font-size: 18px;
+    margin-bottom: 0;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.smallerPrompt {
+    margin-top: 0;
+    font-size: 14px;
+}
+
+.length {
+    max-height: 50px;
+    max-width: 35px;
+    min-height: 25px;
+    min-width: 30px;
+    font-size: 14px;
+}
+
+.separatorInput {
+    font-size: 18px;
+    /*margin-left: 20px;*/
+    margin: 20px auto 20px auto;
+    border: 3px solid lightgray;
+    border-radius: 15px;
+    width: 325px;
+}
+
+.categoryChoices {
+    /*align-items: baseline;*/
+    margin: 20px auto 20px auto;
+    width: 325px;
+    padding-bottom: 10px;
+    border: 3px solid lightgray;
+    border-radius: 15px;
+    font-size: 18px;
+}
+
+/*.categoryGroup1 {
+  align-items: baseline;
+  padding-left: 30px;
+  padding-right: 30px;
+}*/
+
