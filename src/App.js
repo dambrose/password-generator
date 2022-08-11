@@ -8,14 +8,31 @@ import CategoryChoices from './CategoryChoices';
 
 function App() {
 
-	localStorage.clear();
+	/*localStorage.clear();*/
+
+	const title = 'Welcome to Password Generator!';
+	const instructions = 'Click the button below to create strong, secure, randomized and memorable passwords.';
+
+	return (
+		<div className="root">
+			<header className="header">{title}</header>
+			<p className="largePrompt">{instructions}</p>
+
+			<RandomOrRequirements></RandomOrRequirements>
+			<Memorable></Memorable>
+		</div>
+	);
+}
+
+export default App;
+
+
+function RandomOrRequirements() {
 
 	const [state, setState] = useState({
-		password1: "",
-		password2: "",
+		password: "",
 		type: JSON.parse(localStorage.getItem('type')) || 'random',
 		length1: JSON.parse(localStorage.getItem('length1')) || 12,
-		length2: JSON.parse(localStorage.getItem('length2')) || 4,
 		uppercase: (JSON.parse(localStorage.getItem('uppercase')) === true || JSON.parse(localStorage.getItem('uppercase')) === null),
 		lowercase: (JSON.parse(localStorage.getItem('lowercase')) === true || JSON.parse(localStorage.getItem('lowercase')) === null),
 		numeric: (JSON.parse(localStorage.getItem('numeric')) === true || JSON.parse(localStorage.getItem('numeric')) === null),
@@ -23,17 +40,12 @@ function App() {
 		special1: (!(JSON.parse(localStorage.getItem('special1')) === false || JSON.parse(localStorage.getItem('special1')) === null)),
 		special2: (!(JSON.parse(localStorage.getItem('special2')) === false || JSON.parse(localStorage.getItem('special2')) === null)),
 		ambiguous: (JSON.parse(localStorage.getItem('ambiguous')) === true || JSON.parse(localStorage.getItem('ambiguous')) === null),
-		separator: JSON.parse(localStorage.getItem('separator')) || ";"
 	});
 
-	const [error, setError] = useState(false);
-
 	const {
-		password1,
-		password2,
+		password,
 		type,
 		length1,
-		length2,
 		uppercase,
 		lowercase,
 		numeric,
@@ -41,35 +53,25 @@ function App() {
 		special1,
 		special2,
 		ambiguous,
-		separator
 	} = state;
 
-	let defaultPassword1 = (type === "random") ? randomPass(length1) : requirementsPass(length1, state);
-	/*console.log(defaultPassword1);*/
-
-	let defaultPassword2 = dicePass(length2, separator);
-
+	let defaultPassword = (type === "random") ? randomPass(length1) : requirementsPass(length1, state);
 	useEffect(() => {
 		for (const property in state) {
-			if (property !== password1 && property !== password2) {
+			if (property !== password) {
 				if (state[property] !== JSON.parse(localStorage.getItem(property))) {
 					localStorage.setItem(property, JSON.stringify(state[property]));
 				}
 			}
 		}
 
-	}, [type, length1, length2, uppercase, lowercase, numeric, specialAll, special1, special2, ambiguous, separator])
+	}, [type, length1, uppercase, lowercase, numeric, specialAll, special1, special2, ambiguous])
 
 
-	const title = 'Welcome to Password Generator!';
-	const instructions = 'Click the button below to create a strong, secure, randomized or memorable password.';
-	const passwordLabel1 = (password1 === "") ? defaultPassword1 : password1;
-	const passwordLabel2 = (password2 === "") ? defaultPassword2 : password2;
-	const buttonLabel = 'Generate Passwords';
-	const length1Prompt = 'How long would you like your password to be?';
-	const length2Prompt = 'How many words would you like to be in your password?';
-	const separatorPrompt = 'Separator Options'; /*'If you would like a different special character to separate your words, please select it below. \n';*/
-	const categoryPrompt = 'Password Options';
+	const passwordLabel = (password === "") ? defaultPassword : password;
+	const buttonLabel = 'Generate Password';
+	const lengthPrompt = 'Number of characters: ';
+	const categoryPrompt = 'Character Options';
 	const specialChar1 = '!"#$%&\'()*+,-./';
 	const specialChar2 = ':;<=>?@';
 
@@ -78,14 +80,12 @@ function App() {
 		let newState = null;
 
 		if (event.target.id === "generate") {
-			newState = {...state, password: dicePass(length2, separator)};
-
 			if (type === 'random')
 				newState = {...state, password: randomPass(length1)};
 			else if (type === "requirements")
-				newState = {...state, password1: requirementsPass(length1, state)}
-		} else if (event.target.id === "copy1" || event.target.id === "copy2") {
-			const textToCopy = (event.target.id === "copy1") ? passwordLabel1 : passwordLabel2;
+				newState = {...state, password: requirementsPass(length1, state)}
+		} else if (event.target.id === "copy") {
+			const textToCopy = passwordLabel;
 			navigator.clipboard.writeText(textToCopy)
 				.then(() => {
 					console.log('successful copy');
@@ -104,29 +104,29 @@ function App() {
 		let newState = null;
 
 		if (event.target.id === "uppercase")
-			newState = {...state, type: "requirements", uppercase: !uppercase, password1: ""};
+			newState = {...state, type: "requirements", uppercase: !uppercase, password: ""};
 		else if (event.target.id === "lowercase")
-			newState = {...state, type: "requirements", lowercase: !lowercase, password1: ""};
+			newState = {...state, type: "requirements", lowercase: !lowercase, password: ""};
 		else if (event.target.id === "numeric")
-			newState = {...state, type: "requirements", numeric: !numeric, password1: ""};
+			newState = {...state, type: "requirements", numeric: !numeric, password: ""};
 		else if (event.target.id === "special")
 			newState = (special1 || special2) ? {
 				...state,
 				type: "requirements",
 				specialAll: !specialAll,
-				password1: ""
+				password: ""
 			} : {
 				...state,
 				type: "requirements",
 				specialAll: !specialAll,
 				special1: false,
 				special2: false,
-				password1: ""
+				password: ""
 			};
 		else if (event.target.id === "ambiguous")
 			newState = {...state, type: "requirements", ambiguous: !ambiguous};
 		else if (event.target.id === "length1" && event.target.value > 3)
-			newState = {...state, length1: parseInt(event.target.value), password1: ""};
+			newState = {...state, length1: parseInt(event.target.value), password: ""};
 		else if (event.target.value === "all")
 			newState = {
 				...state,
@@ -134,56 +134,39 @@ function App() {
 				specialAll: true,
 				special1: false,
 				special2: false,
-				password1: ""
+				password: ""
 			};
 		else if (event.target.value === "spec1")
-			newState = {...state, type: "requirements", special1: true, special2: false, password1: ""};
+			newState = {...state, type: "requirements", special1: true, special2: false, password: ""};
 		else if (event.target.value === "spec2")
-			newState = {...state, type: "requirements", special1: false, special2: true, password1: ""};
-		else if (event.target.id === ";" || event.target.id === "-" || event.target.id === ":" || event.target.id === "+")
-			newState = {...state, separator: event.target.id};
-		else if (event.target.id === "length2" && event.target.value > 0)
-			newState = {...state, length2: parseInt(event.target.value), password2: ""};
+			newState = {...state, type: "requirements", special1: false, special2: true, password: ""};
 
 		if (newState !== null)
 			setState(newState);
 
-		if (uppercase && lowercase && numeric && specialAll && !special1 && !special2 && ambiguous && type === "requirements") {
+		/*if (uppercase && lowercase && numeric && specialAll && !special1 && !special2 && ambiguous && type === "requirements") {
+			console.log('hello');
 			newState = {...state, type: "random"};
 			setState(newState);
-		}
+		}*/
 	}
 
 	return (
 		<div>
-			{error && <div>An error occurred</div>}
-
-			<header className="header">{title}</header>
-			<p className="largePrompt">{instructions}</p>
-
-			<p className="password">{passwordLabel1}</p>
+			<p className="password">{passwordLabel}</p>
 
 			<Button className="copyButton"
 					label="Copy"
-					id="copy1"
+					id="copy"
 					onClickButton={handleClick}
 			>
 			</Button>
 
-			<form>
-				<label className="smallPrompt">
-					{length1Prompt}
-					<input
-						className="length"
-						type="number" value={length1} id="length1" onChange={handleChange}
-					/>
-				</label>
-			</form>
 			<CategoryChoices categoryChoicesClassName="categoryChoices" categoryClassName="categoryGroup1"
-							 specialChoiceClassName="smallPrompt"
+							 specialChoiceClassName="smallPrompt" length1Prompt={lengthPrompt}
 							 prompt={categoryPrompt}
 							 cbID1="uppercase" cbID2="lowercase" cbID3="numeric" cbID4="special" cbID5="ambiguous"
-							 value1="all" value2="spec1" value3="spec2"
+							 value1="all" value2="spec1" value3="spec2" value4={length1}
 							 label1="Uppercase" label2="Lowercase" label3="Numeric" label4="Special" label5="All"
 							 label6={specialChar1} label7={specialChar2} label8="Ambiguous"
 							 textID1="uppercaseNum" textID2="lowercaseNum" textID3="numericNum" textID4="specialNum"
@@ -193,37 +176,116 @@ function App() {
 			>
 			</CategoryChoices>
 
-			<p className="password">{passwordLabel2}</p>
+			<Button className="generateButton"
+					label={buttonLabel}
+					id="generate"
+					onClickButton={handleClick}
+			>
+			</Button>
+		</div>
+	);
+}
+
+function Memorable() {
+
+	const [state, setState] = useState({
+		password: "",
+		length2: JSON.parse(localStorage.getItem('length')) || 4,
+		separator: JSON.parse(localStorage.getItem('separator')) || ";"
+	});
+
+	const {
+		password,
+		length2,
+		separator
+	} = state;
+
+	let defaultPassword = dicePass(length2, separator);
+
+	useEffect(() => {
+		for (const property in state) {
+			if (property !== password) {
+				if (state[property] !== JSON.parse(localStorage.getItem(property))) {
+					localStorage.setItem(property, JSON.stringify(state[property]));
+				}
+			}
+		}
+
+	}, [length2, separator])
+
+	const passwordLabel = (password === "") ? defaultPassword : password;
+	const buttonLabel = 'Generate Password';
+	const lengthPrompt = 'Number of words: ';
+	const separatorPrompt = 'Separator Options';
+
+	function handleClick(event) {
+
+		let newState = null;
+
+		if (event.target.id === "generate") {
+			newState = {...state, password: dicePass(length2, separator)};
+		} else if (event.target.id === "copy") {
+			const textToCopy = passwordLabel;
+			navigator.clipboard.writeText(textToCopy)
+				.then(() => {
+					console.log('successful copy');
+				})
+				.catch(err => {
+					console.error(err)
+				});
+		}
+
+		if (newState !== null)
+			setState(newState);
+	}
+
+	function handleChange(event) {
+
+		let newState = null;
+
+		if (event.target.id === ";" || event.target.id === "-" || event.target.id === ":" || event.target.id === "+")
+			newState = {...state, separator: event.target.id};
+		else if (event.target.id === "length2" && event.target.value > 0)
+			newState = {...state, length2: parseInt(event.target.value), password: ""};
+
+		if (newState !== null)
+			setState(newState);
+
+	}
+
+	return (
+		<div>
+			<p className="password">{passwordLabel}</p>
 
 			<Button className="copyButton"
 					label="Copy"
-					id="copy2"
+					id="copy"
 					onClickButton={handleClick}
 			>
 			</Button>
 
-			<form>
-				<label className="smallPrompt">
-					{length2Prompt}
-					<input
-						className="length"
-						type="number" value={length2} id="length2" onChange={handleChange}
-					/>
-				</label>
-			</form>
 			<form className="separatorInput">
+				<form>
+					<label className="smallPrompt">
+						{lengthPrompt}
+						<input
+							className="length"
+							type="number" value={length2} id="length2" onChange={handleChange}
+						/>
+					</label>
+				</form>
 				<p className="optionsHeading">{separatorPrompt}</p>
 				<label>
-					<input className="separatorInput" type="checkbox" id=";" onChange={handleChange}
+					<input type="checkbox" id=";" onChange={handleChange}
 						   checked={separator === ";"}/>
 					;
-					<input className="separatorInput" type="checkbox" id="-" onChange={handleChange}
+					<input className="separator" type="checkbox" id="-" onChange={handleChange}
 						   checked={separator === "-"}/>
 					-
-					<input className="separatorInput" type="checkbox" id=":" onChange={handleChange}
+					<input className="separator" type="checkbox" id=":" onChange={handleChange}
 						   checked={separator === ":"}/>
 					:
-					<input className="separatorInput" type="checkbox" id="+" onChange={handleChange}
+					<input className="separator" type="checkbox" id="+" onChange={handleChange}
 						   checked={separator === "+"}/>
 					+
 				</label>
@@ -238,6 +300,4 @@ function App() {
 		</div>
 	);
 }
-
-export default App;
 
