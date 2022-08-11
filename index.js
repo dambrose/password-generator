@@ -1,5 +1,5 @@
-const randomPass = require('./src/randomPass');
-const dicePass = require('./src/dicePass');
+const randomPass = require('./src/lib/randomPass');
+const dicePass = require('./src/lib/dicePass');
 
 console.log('Random:');
 console.log(randomPass());
