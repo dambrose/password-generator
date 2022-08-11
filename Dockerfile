@@ -6,11 +6,11 @@ COPY package.json yarn.lock /srv/app/
 RUN yarn install
 COPY . .
 
-### STAGE 3: Build ###
+### STAGE 2: Build ###
 FROM install as build
 RUN yarn build
 
-### STAGE 4: Production Environment ###
+### STAGE 3: Production Environment ###
 FROM nginx:1.23
 COPY nginx.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build /srv/app/build /usr/share/nginx/html
