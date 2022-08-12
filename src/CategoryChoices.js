@@ -61,18 +61,6 @@ export default function CategoryChoices({
                     </select>
                 </div>
             </form>
-
-            {/*<form>
-                <input type="checkbox" id={cbID4} onChange={onChangeCategoryChoices} defaultChecked={special}/>
-                <label>
-                    {label4}
-                </label>
-                <select className={specialChoiceClassName} onChange={onChangeCategoryChoices}>
-                    <option value={value1} selected={special && !special1 && !special2}>{label5}</option>
-                    <option value={value2} selected={special1}>{label6}</option>
-                    <option value={value3} selected={special2}>{label7}</option>
-                </select>
-            </form>*/}
         </div>
     );
 }

@@ -30,22 +30,10 @@ export default App;
 
 function RandomOrRequirements() {
 
-	const initialState = {
-		password: "",
-		type: JSON.parse(localStorage.getItem('type')) || 'random',
-		length: JSON.parse(localStorage.getItem('randomLength')) || 12,
-		uppercase: (JSON.parse(localStorage.getItem('uppercase')) === true || JSON.parse(localStorage.getItem('uppercase')) === null),
-		lowercase: (JSON.parse(localStorage.getItem('lowercase')) === true || JSON.parse(localStorage.getItem('lowercase')) === null),
-		numeric: (JSON.parse(localStorage.getItem('numeric')) === true || JSON.parse(localStorage.getItem('numeric')) === null),
-		specialAll: (JSON.parse(localStorage.getItem('specialAll')) === true || JSON.parse(localStorage.getItem('specialAll')) === null),
-		special1: (!(JSON.parse(localStorage.getItem('special1')) === false || JSON.parse(localStorage.getItem('special1')) === null)),
-		special2: (!(JSON.parse(localStorage.getItem('special2')) === false || JSON.parse(localStorage.getItem('special2')) === null)),
-		ambiguous: (JSON.parse(localStorage.getItem('ambiguous')) === true || JSON.parse(localStorage.getItem('ambiguous')) === null)
-	}
-
+	/*localStorage.clear();*/
 
 	const [state, setState] = useState({
-		password: (initialState.type === "random") ? randomPass(JSON.parse(localStorage.getItem('randomLength')) || 12) : requirementsPass(JSON.parse(localStorage.getItem('randomLength')) || 12, initialState),
+		password: randomPass(JSON.parse(localStorage.getItem('randomLength')) || 12),
 		type: JSON.parse(localStorage.getItem('type')) || 'random',
 		length: JSON.parse(localStorage.getItem('randomLength')) || 12,
 		uppercase: (JSON.parse(localStorage.getItem('uppercase')) === true || JSON.parse(localStorage.getItem('uppercase')) === null),
@@ -80,6 +68,12 @@ function RandomOrRequirements() {
 		}
 
 	}, [type, length, uppercase, lowercase, numeric, specialAll, special1, special2, ambiguous])
+
+	useEffect(() => {
+		if (type === "requirements") {
+			setState({...state, password: requirementsPass(length, state)});
+		}
+	}, [])
 
 	function handleClick(event) {
 

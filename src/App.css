@@ -17,15 +17,16 @@
     font-weight: bold;
     /*font-size: 68px;*/
     text-align: center;
+    font-size: 1.5em;
 }
 
-.largePrompt {
+/*.largePrompt {
     padding: 0 10px;
-    /*text-align: center;*/
+    !*text-align: center;*!
     font-size: 1em;
     margin-bottom: 0;
     text-align: center;
-}
+}*/
 
 .password {
     overflow-wrap: break-word;
@@ -37,7 +38,7 @@
     border: 3px solid lightseagreen;
     border-radius: 15px;
     font-weight: bold;
-    font-size: 1em;
+    font-size: 1.4em;
     text-align: center;
 }
 
