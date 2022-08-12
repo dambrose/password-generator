@@ -9,15 +9,11 @@ import CategoryChoices from './CategoryChoices';
 
 function App() {
 
-	/*localStorage.clear();*/
-
 	const title = 'Welcome to Password Generator!';
-	const instructions = 'Click the button below to create strong, secure, randomized and memorable passwords.';
 
 	return (
 		<div className="root">
 			<header className="header">{title}</header>
-			{/*<p className="largePrompt">{instructions}</p>*/}
 
 			<RandomOrRequirements></RandomOrRequirements>
 			<Memorable></Memorable>
@@ -29,8 +25,6 @@ export default App;
 
 
 function RandomOrRequirements() {
-
-	/*localStorage.clear();*/
 
 	const [state, setState] = useState({
 		password: randomPass(JSON.parse(localStorage.getItem('randomLength')) || 12),
@@ -152,15 +146,11 @@ function RandomOrRequirements() {
 			>
 			</Button>
 
-			<CategoryChoices categoryChoicesClassName="passwordOptions" categoryClassName="categoryGroup1"
-							 specialChoiceClassName="smallPrompt"
-							 lengthID="length" cbID1="uppercase" cbID2="lowercase" cbID3="numeric" cbID4="special"
-							 cbID5="ambiguous"
-							 value1="all" value2="spec1" value3="spec2" value4={length}
-							 textID1="uppercaseNum" textID2="lowercaseNum" textID3="numericNum" textID4="specialNum"
-							 onChangeCategoryChoices={handleChange}
-							 uppercase={uppercase} lowercase={lowercase} numeric={numeric} special={specialAll}
-							 special1={special1} special2={special2} ambiguous={ambiguous}
+			<CategoryChoices
+				value1="all" value2="spec1" value3="spec2" value4={length}
+				onChangeCategoryChoices={handleChange}
+				uppercase={uppercase} lowercase={lowercase} numeric={numeric} special={specialAll}
+				special1={special1} special2={special2} ambiguous={ambiguous}
 			>
 			</CategoryChoices>
 
@@ -244,17 +234,17 @@ function Memorable() {
 			>
 			</Button>
 
-			<form className="passwordOptions">
+			<form className="passwordOptions mediumFont">
 				<form>
-					<label className="smallPrompt">
+					<label className="mediumFont">
 						Number of words:
 						<input
-							className="length"
+							className="smallFont"
 							type="number" value={length} id="length" onChange={handleChange}
 						/>
 					</label>
 				</form>
-				<p className="optionsHeading">Separator Options</p>
+				<p className="optionsHeading mediumFont">Separator Options</p>
 				<label>
 					<input type="checkbox" id=";" onChange={handleChange}
 						   checked={separator === ";"}/>

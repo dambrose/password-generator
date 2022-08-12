@@ -1,56 +1,26 @@
-/*div {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    flex-flow: column wrap;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    line-height: 1.6;
-}*/
-
 .header {
     line-height: 1.0;
-    /*padding-top: 5px;*/
-    /* padding-bottom: 40px;*/
     color: lightseagreen;
     font-weight: bold;
-    /*font-size: 68px;*/
     text-align: center;
     font-size: 1.5em;
 }
 
-/*.largePrompt {
-    padding: 0 10px;
-    !*text-align: center;*!
-    font-size: 1em;
-    margin-bottom: 0;
-    text-align: center;
-}*/
-
 .password {
     overflow-wrap: break-word;
-    flex-grow: 4;
-    flex-basis: auto auto;
     margin: 20px auto 5px auto;
-    /*width: 325px;*/
     padding: 10px;
     border: 3px solid lightseagreen;
     border-radius: 15px;
     font-weight: bold;
-    font-size: 1.4em;
+    font-size: 1.3em;
     text-align: center;
 }
 
 .generateButton {
-    justify-content: center;
-    /*max-width: 300px;*/
-    /*max-height: 300px;*/
-    /*min-width: 150px;*/
-    /*min-height: 75px;*/
     background-color: lightseagreen;
     color: white;
-    font-size: 22px;
+    font-size: 1.3em;
     margin: 10px 0;
     border-radius: 15px;
     display: block;
@@ -58,55 +28,32 @@
 }
 
 .copyButton {
-    /*max-width: 115px;*/
-    /*max-height: 50px;*/
-    /*min-width: 75px;*/
-    /*min-height: 25px;*/
     font-size: 1em;
-    margin-bottom: 10px;
-    /*display: flex;
-    justify-content: center;*/
+    margin: 10px auto;
     display: block;
-    width: 100%;
 }
 
-.smallPrompt {
+.mediumFont {
     font-size: 18px;
     margin-bottom: 0;
-    /*align-items: center;*/
-    /*text-align: center;*/
 }
 
 .optionsHeading {
-    font-size: 18px;
-    margin-bottom: 0;
     margin-top: 10px;
     font-weight: bold;
 }
 
-.smallerPrompt {
-    margin-top: 0;
-    margin-bottom: 5px;
-    font-size: 14px;
-}
-
-.length {
-    /*max-height: 50px;*/
-    /*max-width: 35px;*/
-    /*min-height: 25px;*/
-    /*min-width: 30px;*/
+.smallFont {
+    /*  margin-top: 0;
+      margin-bottom: 5px;*/
     font-size: 14px;
 }
 
 .passwordOptions {
-    font-size: 18px;
-    /*margin-left: 20px;*/
     margin: auto;
     padding: 10px 10px;
-    /*margin: auto 20px;*/
     border: 3px solid lightgray;
     border-radius: 15px;
-    /*width: 325px;*/
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -114,40 +61,11 @@
 
 .separator {
     margin-left: 20px;
-    font-size: 18px;
-}
-
-/*.categoryChoices {
-    !*align-items: baseline;*!
-    margin: 0 auto;
-    !*width: 325px;*!
-    padding: 10px;
-    border: 3px solid lightgray;
-    border-radius: 15px;
-    font-size: 18px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}*/
-
-.cc {
-    /*display: flex;
-    flex-direction: row;
-    !*width: 50%;*!*/
-    /*column-count: 2;*/
-    /*column-gap: 20px;*/
-    /*display: flex;*/
 }
 
 .cc label {
     display: block;
 }
-
-/*.categoryGroup1 {
-  align-items: baseline;
-  padding-left: 30px;
-  padding-right: 30px;
-}*/
 
 .root {
     max-width: 400px;
