@@ -13,7 +13,7 @@ export default function Switcher({items}) {
 
 	return (
 		<div>
-			<div className="btn-group">
+			<div className="btn-group d-flex justify-content-center">
 				{items.map(({title}, i) => (
 					<button
 						key={i}

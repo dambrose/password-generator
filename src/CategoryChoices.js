@@ -1,7 +1,20 @@
+import RangeSelect from "./RangeSelect";
+
 export default function CategoryChoices({
-                                            value1, value2, value3, value4,
+                                            value1,
+                                            value2,
+                                            value3,
                                             onChangeCategoryChoices,
-                                            uppercase, lowercase, numeric, special, special1, special2, ambiguous
+                                            setState,
+                                            uppercase,
+                                            lowercase,
+                                            numeric,
+                                            special,
+                                            special1,
+                                            special2,
+                                            ambiguous,
+                                            length,
+                                            state
                                         }) {
 
     const specialChar1 = '!"#$%&\'()*+,-./';
@@ -10,57 +23,55 @@ export default function CategoryChoices({
     return (
         <div className="passwordOptions mediumFont">
 
-            <form>
-                <label className="mediumFont">
-                    Number of characters:
-                    <input
-                        className="smallFont"
-                        type="number" value={value4} id="length" onChange={onChangeCategoryChoices}
-                    />
-                </label>
-            </form>
 
-            <p className="optionsHeading mediumFont">Character Options</p>
-            <p className="smallFont">(Ambiguous characters: "O", "1", "I", etc.)</p>
-
-            <form className="cc">
-                <div>
-                    <label>
-                        <input type="checkbox" id="ambiguous" onChange={onChangeCategoryChoices}
-                               defaultChecked={ambiguous}/>
-                        Ambiguous
-                    </label>
-                    <label>
-                        <input type="checkbox" id="uppercase" onChange={onChangeCategoryChoices}
-                               defaultChecked={uppercase}/>
-                        Uppercase
-                    </label>
+            <div className="card border-primary mb-3">
+                <div className="card-body text-primary">
+                    <RangeSelect value={length} setValue={num => setState({...state, length: num})} max={64} min={4}/>
+                    <input readOnly value={length}/>
+                    <h5 className="card-title text-center">Character Options</h5>
+                    <p className="smallFont text-center">(Ambiguous characters: "O", "1", "I", etc.)</p>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" id="ambiguous"
+                               onChange={onChangeCategoryChoices} defaultChecked={ambiguous}/>
+                        <label className="form-check-label" htmlFor="ambiguous">
+                            Ambiguous
+                        </label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" id="uppercase"
+                               onChange={onChangeCategoryChoices} defaultChecked={uppercase}/>
+                        <label className="form-check-label" htmlFor="uppercase">
+                            Uppercase
+                        </label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" id="lowercase"
+                               onChange={onChangeCategoryChoices} defaultChecked={lowercase}/>
+                        <label className="form-check-label" htmlFor="lowercase">
+                            Lowercase
+                        </label>
+                    </div>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" id="numeric"
+                               onChange={onChangeCategoryChoices} defaultChecked={numeric}/>
+                        <label className="form-check-label" htmlFor="numeric">
+                            Numeric
+                        </label>
+                    </div>
+                    <div className="form-check d-inline-flex">
+                        <input className="form-check-input" type="checkbox" id="special"
+                               onChange={onChangeCategoryChoices} defaultChecked={special}/>
+                        <label className="form-check-label" htmlFor="special">
+                            Special
+                        </label>
+                        <select className="form-select form-select-sm" aria-label="Default select example">
+                            <option value={value1} selected={special && !special1 && !special2}>All</option>
+                            <option value={value2} selected={special1}>{specialChar1}</option>
+                            <option value={value3} selected={special2}>{specialChar2}</option>
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <label>
-                        <input type="checkbox" id="lowercase" onChange={onChangeCategoryChoices}
-                               defaultChecked={lowercase}/>
-                        Lowercase
-                    </label>
-                    <label>
-                        <input type="checkbox" id="numeric" onChange={onChangeCategoryChoices}
-                               defaultChecked={numeric}/>
-                        Numeric
-                    </label>
-                </div>
-                <div className="specialDrop">
-                    <label>
-                        <input type="checkbox" id="special" onChange={onChangeCategoryChoices}
-                               defaultChecked={special}/>
-                        Special
-                    </label>
-                    <select className="mediumFont" onChange={onChangeCategoryChoices}>
-                        <option value={value1} selected={special && !special1 && !special2}>All</option>
-                        <option value={value2} selected={special1}>{specialChar1}</option>
-                        <option value={value3} selected={special2}>{specialChar2}</option>
-                    </select>
-                </div>
-            </form>
+            </div>
         </div>
     );
 }
