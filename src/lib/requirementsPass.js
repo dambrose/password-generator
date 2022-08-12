@@ -237,8 +237,6 @@ export default function requirementsPass(length, passObj) {
 
     const characters = getPossibleCharacters(passObj);
 
-    console.log(characters);
-
     let password = getPassword(characters, length);
 
     password = checkCategoriesPresent(password, passObj);

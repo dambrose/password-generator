@@ -1,180 +1,68 @@
 export default function CategoryChoices({
                                             categoryChoicesClassName, categoryClassName, specialChoiceClassName,
-                                            prompt, length1Prompt,
-                                            cbID1, cbID2, cbID3, cbID4, cbID5,
-                                            label1, label2, label3, label4, label5, label6, label7, label8,
+                                            lengthID, cbID1, cbID2, cbID3, cbID4, cbID5,
                                             value1, value2, value3, value4,
                                             onChangeCategoryChoices,
                                             uppercase, lowercase, numeric, special, special1, special2, ambiguous
                                         }) {
+
+    const specialChar1 = '!"#$%&\'()*+,-./';
+    const specialChar2 = ':;<=>?@';
 
     return (
         <div className={categoryChoicesClassName}>
 
             <form>
                 <label className="smallPrompt">
-                    {length1Prompt}
+                    Number of characters:
                     <input
                         className="length"
-                        type="number" value={value4} id="length1" onChange={onChangeCategoryChoices}
+                        type="number" value={value4} id={lengthID} onChange={onChangeCategoryChoices}
                     />
                 </label>
             </form>
 
-            <p className="optionsHeading">{prompt}</p>
+            <p className="optionsHeading">Character Options</p>
             <p className="smallerPrompt">(Ambiguous characters: "O", "1", "I", etc.)</p>
-
-            {/*<form>
-                <form className={categoryClassName}>
-                    <input type="checkbox" id={cbID5} onChange={onChangeCategoryChoices} defaultChecked={ambiguous}/>
-                    <label>
-                        {label8}
-                    </label>
-                    <input type="checkbox" id={cbID2} onChange={onChangeCategoryChoices} defaultChecked={lowercase}/>
-                    <label>
-                        {label2}
-                    </label>
-                </form>
-                <form className={categoryClassName}>
-                    <input type="checkbox" id={cbID1} onChange={onChangeCategoryChoices} defaultChecked={uppercase}/>
-                    <label>
-                        {label1}
-                    </label>
-                    <input type="checkbox" id={cbID3} onChange={onChangeCategoryChoices} defaultChecked={numeric}/>
-                    <label>
-                        {label3}
-                    </label>
-                </form>
-            </form>*/}
-
 
             <form className="cc">
                 <div>
                     <label>
                         <input type="checkbox" id={cbID5} onChange={onChangeCategoryChoices}
                                defaultChecked={ambiguous}/>
-                        {label8}
+                        Ambiguous
                     </label>
                     <label>
                         <input type="checkbox" id={cbID1} onChange={onChangeCategoryChoices}
                                defaultChecked={uppercase}/>
-                        {label1}
+                        Uppercase
                     </label>
                 </div>
                 <div>
                     <label>
                         <input type="checkbox" id={cbID2} onChange={onChangeCategoryChoices}
                                defaultChecked={lowercase}/>
-                        {label2}
+                        Lowercase
                     </label>
                     <label>
                         <input type="checkbox" id={cbID3} onChange={onChangeCategoryChoices} defaultChecked={numeric}/>
-                        {label3}
+                        Numeric
                     </label>
+                </div>
+                <div className="specialDrop">
+                    <label>
+                        <input type="checkbox" id={cbID4} onChange={onChangeCategoryChoices} defaultChecked={special}/>
+                        Special
+                    </label>
+                    <select className={specialChoiceClassName} onChange={onChangeCategoryChoices}>
+                        <option value={value1} selected={special && !special1 && !special2}>All</option>
+                        <option value={value2} selected={special1}>{specialChar1}</option>
+                        <option value={value3} selected={special2}>{specialChar2}</option>
+                    </select>
                 </div>
             </form>
-
-
-            {/* <form className="cc">
-                <input type="checkbox" id={cbID5} onChange={onChangeCategoryChoices} defaultChecked={ambiguous}/>
-                <label>
-                    {label8}
-                </label>
-                <input type="checkbox" id={cbID1} onChange={onChangeCategoryChoices} defaultChecked={uppercase}/>
-                <label>
-                    {label1}
-                </label>
-                <input type="checkbox" id={cbID2} onChange={onChangeCategoryChoices} defaultChecked={lowercase}/>
-                <label>
-                    {label2}
-                </label>
-                <input type="checkbox" id={cbID3} onChange={onChangeCategoryChoices} defaultChecked={numeric}/>
-                <label>
-                    {label3}
-                </label>
-            </form>*/}
-
-
-            {/*<div>
-                <form style={{columnCount: 2}}>
-                    <input type="checkbox" id={cbID5} onChange={onChangeCategoryChoices} defaultChecked={ambiguous}/>
-                    <label>
-                        {label8}
-                    </label>
-                    <input type="checkbox" id={cbID1} onChange={onChangeCategoryChoices} defaultChecked={uppercase}/>
-                    <label>
-                        {label1}
-                    </label>
-                    <input type="checkbox" id={cbID2} onChange={onChangeCategoryChoices} defaultChecked={lowercase}/>
-                    <label>
-                        {label2}
-                    </label>
-                    <input type="checkbox" id={cbID3} onChange={onChangeCategoryChoices} defaultChecked={numeric}/>
-                    <label>
-                        {label3}
-                    </label>
-                </form>
-
-
-
-
-
-
-
-                <div style={{display: "inline"}}>
-                    <form style={{display: "inline", marginRight: "20px"}}>
-                        <input type="checkbox" id={cbID5} onChange={onChangeCategoryChoices} defaultChecked={ambiguous}/>
-                        <label>
-                            {label8}
-                        </label>
-                    </form>
-                    <form style={{display: "inline"}}>
-                        <input className={categoryClassName} type="checkbox" id={cbID1} onChange={onChangeCategoryChoices} defaultChecked={uppercase}/>
-                        <label>
-                            {label1}
-                        </label>
-                    </form>
-                </div>
-                <div style={{display: "inline"}}>
-                    <form style={{display: "inline", verticalAlign: "top"}}>
-                        <input type="checkbox" id={cbID2} onChange={onChangeCategoryChoices} defaultChecked={lowercase}/>
-                        <label>
-                            {label2}
-                        </label>
-                    </form>
-                    <form style={{display: "inline"}}>
-                        <input className={categoryClassName} type="checkbox" id={cbID3} onChange={onChangeCategoryChoices} defaultChecked={numeric}/>
-                        <label>
-                            {label3}
-                        </label>
-                    </form>
-                </div>
-            </div>*/}
-
 
             {/*<form>
-                <input type="checkbox" id={cbID5} onChange={onChangeCategoryChoices} defaultChecked={ambiguous}/>
-                <label>
-                    {label8}
-                </label>
-                <input className={categoryClassName} type="checkbox" id={cbID1} onChange={onChangeCategoryChoices} defaultChecked={uppercase}/>
-                <label>
-                    {label1}
-                </label>
-            </form>
-
-            <form>
-                <input type="checkbox" id={cbID2} onChange={onChangeCategoryChoices} defaultChecked={lowercase}/>
-                <label>
-                    {label2}
-                </label>
-                <input className={categoryClassName} type="checkbox" id={cbID3} onChange={onChangeCategoryChoices} defaultChecked={numeric}/>
-                <label>
-                    {label3}
-                </label>
-            </form>*/}
-
-            <form>
                 <input type="checkbox" id={cbID4} onChange={onChangeCategoryChoices} defaultChecked={special}/>
                 <label>
                     {label4}
@@ -184,7 +72,7 @@ export default function CategoryChoices({
                     <option value={value2} selected={special1}>{label6}</option>
                     <option value={value3} selected={special2}>{label7}</option>
                 </select>
-            </form>
+            </form>*/}
         </div>
     );
 }

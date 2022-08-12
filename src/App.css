@@ -11,11 +11,12 @@
 
 .header {
     line-height: 1.0;
-    padding-top: 30px;
+    /*padding-top: 5px;*/
     /* padding-bottom: 40px;*/
     color: lightseagreen;
     font-weight: bold;
     /*font-size: 68px;*/
+    text-align: center;
 }
 
 .largePrompt {
@@ -23,19 +24,21 @@
     /*text-align: center;*/
     font-size: 1em;
     margin-bottom: 0;
+    text-align: center;
 }
 
 .password {
     overflow-wrap: break-word;
     flex-grow: 4;
     flex-basis: auto auto;
-    margin: 30px auto 5px auto;
+    margin: 20px auto 5px auto;
     /*width: 325px;*/
     padding: 10px;
     border: 3px solid lightseagreen;
     border-radius: 15px;
     font-weight: bold;
     font-size: 1em;
+    text-align: center;
 }
 
 .generateButton {
@@ -47,8 +50,10 @@
     background-color: lightseagreen;
     color: white;
     font-size: 22px;
-    margin: 30px;
+    margin: 10px 0;
     border-radius: 15px;
+    display: block;
+    width: 100%;
 }
 
 .copyButton {
@@ -58,6 +63,10 @@
     /*min-height: 25px;*/
     font-size: 1em;
     margin-bottom: 10px;
+    /*display: flex;
+    justify-content: center;*/
+    display: block;
+    width: 100%;
 }
 
 .smallPrompt {
@@ -88,7 +97,7 @@
     font-size: 14px;
 }
 
-.separatorInput {
+.passwordOptions {
     font-size: 18px;
     /*margin-left: 20px;*/
     margin: auto;
@@ -97,6 +106,9 @@
     border: 3px solid lightgray;
     border-radius: 15px;
     /*width: 325px;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .separator {
@@ -104,15 +116,18 @@
     font-size: 18px;
 }
 
-.categoryChoices {
-    /*align-items: baseline;*/
-    margin: 0 auto 20px auto;
-    /*width: 325px;*/
+/*.categoryChoices {
+    !*align-items: baseline;*!
+    margin: 0 auto;
+    !*width: 325px;*!
     padding: 10px;
     border: 3px solid lightgray;
     border-radius: 15px;
     font-size: 18px;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}*/
 
 .cc {
     /*display: flex;
@@ -138,5 +153,6 @@
     margin: 20px auto;
 }
 
-.smallFont {
+.specialDrop {
+    display: flex;
 }
