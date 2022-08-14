@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import dicePass, {DEFAULT_OPTIONS, SEPARATORS} from './lib/dicePass';
 import RangeSelect from './RangeSelect';
 import Button from './Button';
+import Password from './Password';
 
 export default function Memorable() {
 	const savedOptions = {
@@ -24,16 +25,6 @@ export default function Memorable() {
 		}));
 	}, [length, separator]);
 
-	function handleCopy() {
-		navigator.clipboard.writeText(password)
-			.then(() => {
-				console.log('successful copy');
-			})
-			.catch(err => {
-				console.error(err);
-			});
-	}
-
 	const handleGenerate = () => setPassword(dicePass(options));
 
 	const handleLength = len => {
@@ -53,10 +44,7 @@ export default function Memorable() {
 
 	return (
 		<div>
-			<div className="input-group mb-3 mt-2">
-				<input type="text" className="form-control text-break" value={password}/>
-				<span id="copy" onClick={handleCopy} className="input-group-text"><i className="bi-clipboard"/></span>
-			</div>
+			<Password password={password}/>
 			<div className="card border-primary mb-3">
 				<div className="card-body text-primary">
 					<div className="h5 card-title text-center">Options</div>

@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import randomPass, {DEFAULT_OPTIONS, SPECIAL1, SPECIAL2} from './lib/randomPass';
 import Button from './Button';
 import RangeSelect from './RangeSelect';
+import Password from './Password';
 
 export default function Random() {
 	const savedOptions = {
@@ -34,16 +35,6 @@ export default function Random() {
 		}));
 	}, [length, uppercase, lowercase, numeric, special1, special2, ambiguous]);
 
-	function handleCopy() {
-		navigator.clipboard.writeText(password)
-			.then(() => {
-				console.log('successful copy');
-			})
-			.catch(err => {
-				console.error(err);
-			});
-	}
-
 	const handleGenerate = () => setPassword(randomPass(options));
 
 	const handleCheckbox = name => () => {
@@ -63,10 +54,7 @@ export default function Random() {
 
 	return (
 		<div>
-			<div className="input-group mb-3 mt-2">
-				<input readOnly type="text" className="form-control" value={password}/>
-				<span onClick={handleCopy} className="input-group-text"><i className="bi-clipboard"/></span>
-			</div>
+			<Password password={password}/>
 			<div className="card border-primary mb-3">
 				<div className="card-body text-primary">
 					<div className="h5 card-title text-center">Options</div>
