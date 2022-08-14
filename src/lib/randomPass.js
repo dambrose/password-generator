@@ -2,27 +2,47 @@ const ALPHA = 'abcdefghijklmnopqrstuvwxyz';
 const NUMBERS = '0123456789';
 const SPECIAL1 = '!"#$%&\'()*+,-./';
 const SPECIAL2 = ':;<=>?@';
+const AMBIGUOUS = 'l1IioO0';
 
-export default function (length, {
-	lowercase = true,
-	uppercase = true,
-	numeric = true,
-	specialAll = true,
-	special1 = true,
-	special2 = true,
-	ambiguous = false
-} = {}) {
+const DEFAULT_OPTIONS = {
+	length: 12,
+	uppercase: true,
+	lowercase: true,
+	numeric: true,
+	special1: true,
+	special2: true,
+	ambiguous: false
+};
 
-	const chars = (lowercase ? ALPHA : '') +
+export {SPECIAL1, SPECIAL2, DEFAULT_OPTIONS};
+
+export default function (options = {}) {
+
+	options = {
+		...DEFAULT_OPTIONS,
+		...options
+	};
+
+	const {
+		length,
+		uppercase,
+		lowercase,
+		numeric,
+		special1,
+		special2,
+		ambiguous
+	} = options;
+
+	const chars = ((lowercase ? ALPHA : '') +
 		(uppercase ? ALPHA.toUpperCase() : '') +
 		(numeric ? NUMBERS : '') +
-		(specialAll || special1 ? SPECIAL1 : '') +
-		(specialAll || special2 ? SPECIAL2 : '')
-			.split('')
-			.filter(char => !ambiguous || !/l1IoO0/.test(char));
+		(special1 ? SPECIAL1 : '') +
+		(special2 ? SPECIAL2 : ''))
+		.split('')
+		.filter(char => ambiguous || !new RegExp(`[${AMBIGUOUS}]`).test(char));
 
 	return new Array(length).fill(null).map(() => {
-		const randIndex = Math.random() * chars.length;
+		const randIndex = Math.round(Math.random() * chars.length);
 		return chars[randIndex];
 	}).join('');
 
