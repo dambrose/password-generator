@@ -57,7 +57,7 @@ export default function Memorable() {
 						<div>Separator</div>
 						<div>
 							{SEPARATORS.map(char => (
-								<div className="form-check form-check-inline">
+								<div key={char} className="form-check form-check-inline">
 									<input
 										className="form-check-input"
 										type="radio"
