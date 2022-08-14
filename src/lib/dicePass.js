@@ -7,7 +7,9 @@ const DEFAULT_OPTIONS = {
 
 const SEPARATORS = [';', '-', ':', '+'];
 
-const dicePass = (options = {}) => {
+export {DEFAULT_OPTIONS, SEPARATORS};
+
+export default function dicePass(options = {}) {
 
 	options = {
 		...DEFAULT_OPTIONS,
@@ -22,6 +24,3 @@ const dicePass = (options = {}) => {
 		return word;
 	}).join(separator);
 };
-
-export default dicePass;
-export {DEFAULT_OPTIONS, SEPARATORS};

@@ -16,7 +16,7 @@ const DEFAULT_OPTIONS = {
 
 export {SPECIAL1, SPECIAL2, DEFAULT_OPTIONS};
 
-export default function (options = {}) {
+export default function randomPass(options = {}) {
 
 	options = {
 		...DEFAULT_OPTIONS,
