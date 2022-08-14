@@ -1,52 +1,38 @@
 import {useEffect, useState} from 'react';
-import randomPass from './lib/randomPass';
-import CategoryChoices from './CategoryChoices';
+import randomPass, {DEFAULT_OPTIONS, SPECIAL1, SPECIAL2} from './lib/randomPass';
 import Button from './Button';
+import RangeSelect from './RangeSelect';
 
 export default function Random() {
+	const savedOptions = {
+		...DEFAULT_OPTIONS,
+		...JSON.parse(localStorage.getItem('RANDOM_OPTIONS') ?? '{}')
+	};
 
-	const [state, setState] = useState({
-		password: randomPass(JSON.parse(localStorage.getItem('randomLength')) || 12),
-		type: JSON.parse(localStorage.getItem('type')) || 'random',
-		length: JSON.parse(localStorage.getItem('randomLength')) || 12,
-		uppercase: (JSON.parse(localStorage.getItem('uppercase')) === true || JSON.parse(localStorage.getItem('uppercase')) === null),
-		lowercase: (JSON.parse(localStorage.getItem('lowercase')) === true || JSON.parse(localStorage.getItem('lowercase')) === null),
-		numeric: (JSON.parse(localStorage.getItem('numeric')) === true || JSON.parse(localStorage.getItem('numeric')) === null),
-		specialAll: (JSON.parse(localStorage.getItem('specialAll')) === true || JSON.parse(localStorage.getItem('specialAll')) === null),
-		special1: (!(JSON.parse(localStorage.getItem('special1')) === false || JSON.parse(localStorage.getItem('special1')) === null)),
-		special2: (!(JSON.parse(localStorage.getItem('special2')) === false || JSON.parse(localStorage.getItem('special2')) === null)),
-		ambiguous: (JSON.parse(localStorage.getItem('ambiguous')) === true || JSON.parse(localStorage.getItem('ambiguous')) === null)
-	});
+	const [password, setPassword] = useState(randomPass(savedOptions));
+	const [options, setOptions] = useState(savedOptions);
 
 	const {
-		password,
-		type,
 		length,
 		uppercase,
 		lowercase,
 		numeric,
-		specialAll,
 		special1,
 		special2,
 		ambiguous
-	} = state;
+	} = options;
 
 	useEffect(() => {
-		for (const property in state) {
-			if (property !== 'password') {
-				if (state[property] !== JSON.parse(localStorage.getItem(property))) {
-					(property === 'length') ? localStorage.setItem('randomLength', JSON.stringify(state[property])) : localStorage.setItem(property, JSON.stringify(state[property]));
-				}
-			}
-		}
-
-	}, [type, length, uppercase, lowercase, numeric, specialAll, special1, special2, ambiguous]);
-
-	useEffect(() => {
-		if (type === 'requirements') {
-			setState({...state, password: randomPass(length, state)});
-		}
-	}, []);
+		localStorage.setItem('RANDOM_OPTIONS', JSON.stringify({
+			length,
+			uppercase,
+			lowercase,
+			numeric,
+			special1,
+			special2,
+			ambiguous
+		}));
+	}, [length, uppercase, lowercase, numeric, special1, special2, ambiguous]);
 
 	function handleCopy() {
 		navigator.clipboard.writeText(password)
@@ -58,67 +44,86 @@ export default function Random() {
 			});
 	}
 
-	function handleClick() {
-		setState({...state, password: randomPass(length, state)});
-	}
+	const handleGenerate = () => setPassword(randomPass(options));
 
-	function handleChange(event) {
+	const handleCheckbox = name => () => {
+		const newOptions = {
+			...options,
+			[name]: !options[name]
+		};
+		setPassword(randomPass(newOptions));
+		setOptions(newOptions);
+	};
 
-		let newState = null;
-
-		if (event.target.id === 'uppercase')
-			newState = {...state, type: 'requirements', uppercase: !uppercase};
-		else if (event.target.id === 'lowercase')
-			newState = {...state, type: 'requirements', lowercase: !lowercase};
-		else if (event.target.id === 'numeric')
-			newState = {...state, type: 'requirements', numeric: !numeric};
-		else if (event.target.id === 'special')
-			newState = (special1 || special2) ? {
-				...state,
-				type: 'requirements',
-				specialAll: !specialAll
-			} : {
-				...state,
-				type: 'requirements',
-				specialAll: !specialAll,
-				special1: false,
-				special2: false
-			};
-		else if (event.target.id === 'ambiguous')
-			newState = {...state, type: 'requirements', ambiguous: !ambiguous};
-		else if (event.target.value === 'all')
-			newState = {
-				...state,
-				type: 'requirements',
-				specialAll: true,
-				special1: false,
-				special2: false
-			};
-		else if (event.target.value === 'spec1')
-			newState = {...state, type: 'requirements', special1: true, special2: false};
-		else if (event.target.value === 'spec2')
-			newState = {...state, type: 'requirements', special1: false, special2: true};
-
-		if (newState !== null)
-			setState(newState);
-	}
+	const handleLength = len => {
+		const newOptions = {...options, length: parseInt(len)};
+		setPassword(randomPass(newOptions));
+		setOptions(newOptions);
+	};
 
 	return (
 		<div>
 			<div className="input-group mb-3 mt-2">
-				<input type="text" className="form-control" value={password}/>
-				<span id="copy" onClick={handleCopy} className="input-group-text"><i className="bi-clipboard"/></span>
+				<input readOnly type="text" className="form-control" value={password}/>
+				<span onClick={handleCopy} className="input-group-text"><i className="bi-clipboard"/></span>
 			</div>
+			<div className="card border-primary mb-3">
+				<div className="card-body text-primary">
+					<div className="h5 card-title text-center">Options</div>
+					<div className="d-flex gap-2">
+						<label htmlFor="customRange3" className="form-label">Length</label>
+						<RangeSelect value={length} setValue={handleLength} max={64} min={4}/>
+						<div>{length}</div>
+					</div>
 
-			<CategoryChoices
-				value1="all" value2="spec1" value3="spec2" value4={length}
-				onChangeCategoryChoices={handleChange} setState={setState}
-				uppercase={uppercase} lowercase={lowercase} numeric={numeric} special={specialAll}
-				special1={special1} special2={special2} ambiguous={ambiguous} length={length} state={state}
-
-			/>
-
-			<Button id="generate" onClickButton={handleClick}>Generate Password</Button>
+					<p className="smallFont text-center"></p>
+					<div className="form-check">
+						<input className="form-check-input" type="checkbox" name="lowercase"
+						       onChange={handleCheckbox('lowercase')} checked={lowercase}/>
+						<label className="form-check-label" htmlFor="lowercase">
+							Lowercase
+						</label>
+					</div>
+					<div className="form-check">
+						<input className="form-check-input" type="checkbox" name="uppercase"
+						       onChange={handleCheckbox('uppercase')} checked={uppercase}/>
+						<label className="form-check-label" htmlFor="uppercase">
+							Uppercase
+						</label>
+					</div>
+					<div className="form-check">
+						<input className="form-check-input" type="checkbox" name="numeric"
+						       onChange={handleCheckbox('numeric')} checked={numeric}/>
+						<label className="form-check-label" htmlFor="numeric">
+							Numeric
+						</label>
+					</div>
+					<div className="form-check">
+						<input className="form-check-input" type="checkbox" id="ambiguous"
+						       onChange={handleCheckbox('ambiguous')} checked={ambiguous}/>
+						<label className="form-check-label" htmlFor="ambiguous">
+							Ambiguous ("O", "0", "1", "I", etc.)
+						</label>
+					</div>
+					<div className="form-check">
+						<input className="form-check-input" type="checkbox" name="special1"
+						       onChange={handleCheckbox('special1')} checked={special1}/>
+						<label className="form-check-label" htmlFor="special1">
+							{SPECIAL1}
+						</label>
+					</div>
+					<div className="form-check">
+						<input className="form-check-input" type="checkbox" name="special2"
+						       onChange={handleCheckbox('special2')} checked={special2}/>
+						<label className="form-check-label" htmlFor="special2">
+							{SPECIAL2}
+						</label>
+					</div>
+				</div>
+			</div>
+			<div className="d-grid gap-2">
+				<Button onClick={handleGenerate}>Generate Password</Button>
+			</div>
 		</div>
 	);
 }
