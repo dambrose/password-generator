@@ -66,21 +66,21 @@ export default function Random() {
 
 					<p className="smallFont text-center"></p>
 					<div className="form-check">
-						<input className="form-check-input" type="checkbox" name="lowercase"
+						<input className="form-check-input" type="checkbox" id="lowercase"
 						       onChange={handleCheckbox('lowercase')} checked={lowercase}/>
 						<label className="form-check-label" htmlFor="lowercase">
 							Lowercase
 						</label>
 					</div>
 					<div className="form-check">
-						<input className="form-check-input" type="checkbox" name="uppercase"
+						<input className="form-check-input" type="checkbox" id="uppercase"
 						       onChange={handleCheckbox('uppercase')} checked={uppercase}/>
 						<label className="form-check-label" htmlFor="uppercase">
 							Uppercase
 						</label>
 					</div>
 					<div className="form-check">
-						<input className="form-check-input" type="checkbox" name="numeric"
+						<input className="form-check-input" type="checkbox" id="numeric"
 						       onChange={handleCheckbox('numeric')} checked={numeric}/>
 						<label className="form-check-label" htmlFor="numeric">
 							Numeric
@@ -94,14 +94,14 @@ export default function Random() {
 						</label>
 					</div>
 					<div className="form-check">
-						<input className="form-check-input" type="checkbox" name="special1"
+						<input className="form-check-input" type="checkbox" id="special1"
 						       onChange={handleCheckbox('special1')} checked={special1}/>
 						<label className="form-check-label" htmlFor="special1">
 							{SPECIAL1}
 						</label>
 					</div>
 					<div className="form-check">
-						<input className="form-check-input" type="checkbox" name="special2"
+						<input className="form-check-input" type="checkbox" id="special2"
 						       onChange={handleCheckbox('special2')} checked={special2}/>
 						<label className="form-check-label" htmlFor="special2">
 							{SPECIAL2}

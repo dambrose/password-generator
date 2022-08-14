@@ -61,11 +61,11 @@ export default function Memorable() {
 									<input
 										className="form-check-input"
 										type="radio"
-										name={char}
+										id={`separator-${char}`}
 										onChange={handleSeparator(char)}
 										checked={separator === char}
 									/>
-									<label className="form-check-label" htmlFor={char}>{char}</label>
+									<label className="form-check-label" htmlFor={`separator-${char}`}>{char}</label>
 								</div>
 							))}
 						</div>
