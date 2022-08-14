@@ -17,7 +17,7 @@ export default function Switcher({items}) {
 				{items.map(({title}, i) => (
 					<button
 						key={i}
-						className={`btn btn-${index === i ? 'primary' : 'default'}`}
+						className={`btn btn-${index === i ? 'primary' : 'outline-secondary'}`}
 						onClick={handleClick(i)}
 					>
 						{title}
