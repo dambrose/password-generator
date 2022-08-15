@@ -1,11 +1,8 @@
-export default function Button({label, onClickButton, className, id}) {
+export default function Button({children, onClick}) {
 
-    return (
-        <button className={className}
-                id={id}
-                onClick={onClickButton}
-        >
-            {label}
-        </button>
-    );
+	return (
+		<button className="btn btn-primary" onClick={onClick}>
+			{children}
+		</button>
+	);
 }
