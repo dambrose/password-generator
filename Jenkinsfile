@@ -25,20 +25,7 @@ pipeline {
             }
         }
 
-        stage ('Push Development Images') {
-            when {
-                branch 'develop'
-            }
-            steps {
-                script {
-                    docker.withRegistry('', REGISTRY_CREDENTIALS) {
-                        sh 'docker push ${IMAGE_REPOSITORY}:${BRANCH_NAME}'
-                    }
-                }
-            }
-        }
-
-        stage ('Push Production Images') {
+        stage ('Push Latest') {
             when {
                 branch 'master'
             }
@@ -46,8 +33,20 @@ pipeline {
                 script {
                     docker.withRegistry('', REGISTRY_CREDENTIALS) {
                         sh 'docker tag ${IMAGE_REPOSITORY}:${BRANCH_NAME} ${IMAGE_REPOSITORY}'
-                        sh 'docker tag ${IMAGE_REPOSITORY}:${BRANCH_NAME} ${IMAGE_REPOSITORY}:${VERSION}'
                         sh 'docker push ${IMAGE_REPOSITORY}'
+                    }
+                }
+            }
+        }
+
+        stage ('Push Version') {
+            when {
+                expression { BRANCH_NAME ==~ /^release-[0-9]+\.[0-9]+\.[0-9]+$/ }
+            }
+            steps {
+                script {
+                    docker.withRegistry('', REGISTRY_CREDENTIALS) {
+                        sh 'docker tag ${IMAGE_REPOSITORY}:${BRANCH_NAME} ${IMAGE_REPOSITORY}:${VERSION}'
                         sh 'docker push ${IMAGE_REPOSITORY}:${VERSION}'
                     }
                 }
